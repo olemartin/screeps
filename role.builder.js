@@ -21,11 +21,11 @@ const roleBuilder = {
                 const buildTarget = assignments.findNearestConstructionSite({creep});
                 const repairTarget = assignments.findNearestRepairTarget({room: creep.room, creep, max: 500});
 
-                if ((!repairTarget && buildTarget && creep.store[RESOURCE_ENERGY] > 10) || buildTarget && creep.pos.getRangeTo(buildTarget) < creep.pos.getRangeTo(repairTarget)) {
+                if ((!repairTarget && buildTarget) || buildTarget && creep.pos.getRangeTo(buildTarget) < creep.pos.getRangeTo(repairTarget)) {
                     assignments.build({target: buildTarget, creep});
                 } else if (repairTarget) {
                     assignments.repairTarget({target: repairTarget, creep});
-                } else if (creep.room.energyAvailable > 0 && creep.room.energyAvailable < 300) {
+                } else if (creep.room.energyAvailable > 0 && creep.room.energyAvailable < 800) {
                     const struct = harvesting.findSpawn(creep);
                     harvesting.moveToSpawn(creep, struct)
                 } else {

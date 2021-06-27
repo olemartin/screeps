@@ -1,8 +1,8 @@
 const roleClaimer = {
 
     run: function (creep) {
-        if (creep.pos.roomName != 'E42N55') {
-            creep.moveTo(new RoomPosition(24, 34, 'E42N55'))
+        if (creep.pos.roomName != 'E42N54') {
+            creep.moveTo(new RoomPosition(24, 34, 'E42N54'))
         } else {
             const r = creep.claimController(creep.room.controller);
             if (r === ERR_NOT_IN_RANGE) {

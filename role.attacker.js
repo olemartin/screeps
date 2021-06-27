@@ -1,4 +1,3 @@
-const assignments = require('./assignments');
 const roleAttacker = {
 
     run: function (creep, opts) {
@@ -6,14 +5,14 @@ const roleAttacker = {
         const hostile = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS)
         const structure = creep.pos.findClosestByPath(FIND_HOSTILE_SPAWNS) || creep.pos.findClosestByPath(FIND_STRUCTURES)
         if (!hostile && structure && (opts && opts.remote)) {
-            if (creep.attack(structure) == ERR_NOT_IN_RANGE) {
-                console.log('moving to ', structure.id)
+            if (!structure.my && creep.attack(structure) == ERR_NOT_IN_RANGE) {
+                console.log('moving to ', structure.id, structure.my )
                 creep.moveTo(structure);
             } else {
-                console.log('attacking', structure.id)
+                console.log('attacking', structure.id, structure.owner)
             }
         } else if (opts && !hostile && opts.remote) {
-            creep.moveTo(new RoomPosition(24, 34, 'E42N55'))
+            creep.moveTo(new RoomPosition(17, 5, 'E42N54'))
         } else {
             if (hostile) {
                 var username = hostile.owner.username;

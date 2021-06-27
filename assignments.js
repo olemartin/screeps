@@ -3,7 +3,7 @@ module.exports.findNearestRepairTarget = ({room, creep, max}) => {
         filter: (structure) => {
             return (!max || (structure.hits < max && structure.hits < structure.hitsMax)) &&
                 ((structure.hitsMax < 30000 && structure.hits < structure.hitsMax / 4) ||
-                    (structure.hitsMax >= 30000 && structure.hits > 0 && structure.hits < 100000 && structure.hits < structure.hitsMax));
+                    (structure.hitsMax >= 30000 && structure.hits > 0 && structure.hits < 1000000 && structure.hits < structure.hitsMax));
         }
     });
     if (creep) {

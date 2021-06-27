@@ -53,7 +53,8 @@ const energies = {
     [REMOTE_ATTACKER_ROLE]: [
         {
             fromLevel: 4,
-            energies: [TOUGH, TOUGH, ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, MOVE, MOVE]
+            energies: [TOUGH, TOUGH, TOUGH, TOUGH, ATTACK, ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE],
+            total: true
         }
     ],
     [REMOTE_BUILDER_ROLE]: [
@@ -65,7 +66,7 @@ const energies = {
     [SPAWN_CLAIMER]: [
         {
             fromLevel: 1,
-            energies: [TOUGH, TOUGH, CLAIM, MOVE, MOVE, MOVE]
+            energies: [TOUGH, TOUGH, TOUGH, TOUGH, CLAIM, MOVE, MOVE, MOVE, MOVE, MOVE]
         }
     ]
 }
@@ -85,11 +86,11 @@ module.exports.spawn = (room) => {
         } else {
             if (!enough(SLOW_HARVESTER_ROLE, 3, room)) {
                 create({type: SLOW_HARVESTER_ROLE, room});
-            } else if (!enough(HARVESTER_ROLE, 3, room)) {
+            } else if (!enough(HARVESTER_ROLE, 2, room)) {
                 create({type: HARVESTER_ROLE, room})
-            } else if (!enough(BUILDER_ROLE, 5, room)) {
+            } else if (!enough(BUILDER_ROLE, 6, room)) {
                 create({type: BUILDER_ROLE, room});
-            } else if (!enough(REMOTE_BUILDER_ROLE, 2, room)) {
+            } else if (!enough(REMOTE_BUILDER_ROLE, 0, room)) {
                 create({type: REMOTE_BUILDER_ROLE, room});
             } else if (!enough(REMOTE_ATTACKER_ROLE, 0, room)) {
                 create({type: REMOTE_ATTACKER_ROLE, room});
@@ -114,13 +115,14 @@ const enough = (role, number, room) => {
 let slowHarvesterCounter = 0
 const create = ({type, room}) => {
     const name = type + Game.time;
-    const roles = _.sortBy(energies[type].filter(e => e.fromLevel <= room.controller.level), e => e.fromLevel * -1)[0].energies;
+    const roles = _.sortBy(energies[type].filter(e => e.fromLevel <= room.controller.level), e => e.fromLevel * -1)[0];
+
     const spawn = getRoomSpawn(room);
 
     console.log('Trying to spawn', name, 'in', room)
 
     if (spawn && roles) {
-        const spawnResult = spawn.spawnCreep(roles, name, {memory: {role: type}});
+        const spawnResult = spawn.spawnCreep(roles.energies, name, {memory: {role: type}});
         if (spawnResult === OK) {
             console.log('Spawning', type, 'in', room)
             if (type === SLOW_HARVESTER_ROLE) {

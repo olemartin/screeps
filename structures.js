@@ -16,7 +16,7 @@ module.exports.doTowers = () => {
             const target = assignments.findNearestRepairTarget({room: Game.rooms[gameRoom]});
             if (target) {
                 towers.forEach(tower => {
-                    if (tower.store[RESOURCE_ENERGY] < 150 || Game.rooms[gameRoom].energyAvailable < 1000) {
+                    if (tower.store[RESOURCE_ENERGY] < 150 || Game.rooms[gameRoom].energyAvailable < 800) {
                         return;
                     }
                     console.log(`Repairing ${target.id}(${target.structureType})`)
